@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Security.Cryptography;
 using System.Xml.Linq;
+using System.Web.Mvc;
 
 namespace Ost_inventory_b4.Models
 {
@@ -125,5 +126,41 @@ namespace Ost_inventory_b4.Models
             }
             return status;
         }
+
+        public bool SaveCustomerEquipmentAssignment(FormCollection formcoll)
+        {
+            bool status = false;
+            string ConnString = ConfigurationManager.ConnectionStrings["ConnString"].ToString();
+            SqlConnection sqlConnection = new SqlConnection(ConnString);
+
+            try
+            {
+                sqlConnection.Open();
+                string Query = "spOST_InsEquiAssignment";
+                SqlCommand cmd = new SqlCommand(Query, sqlConnection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Clear();
+                cmd.Parameters.Add(new SqlParameter("@CustomerID", Convert.ToInt32(formcoll["ddlCustomer"].ToString())));
+                cmd.Parameters.Add(new SqlParameter("@EquipmentID", Convert.ToInt32(formcoll["ddlEquipment"].ToString())));
+                cmd.Parameters.Add(new SqlParameter("@EquiCount", Convert.ToInt32(formcoll["txtEquiCount"].ToString()))); 
+                cmd.CommandTimeout = 0;
+
+                int returnvalue = cmd.ExecuteNonQuery();//insert delete update
+                if (returnvalue > 0)
+                {
+                    status = true;
+                }
+
+                //transaction
+                cmd.Dispose();
+                sqlConnection.Close();
+            }
+            catch (Exception ex)
+            {
+                sqlConnection.Close();
+            }
+            return status;
+        }
+         
     }
 }

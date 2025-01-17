@@ -26,14 +26,14 @@
     <script>
         var ExistUserName = '@ExistUserName';
         if (ExistUserName == "") {
-            window.location.href = '@Url.Action("Login","Auth")';
+            window.location.href = '@Url.Action("Login", "Auth")';
         }
         else
         {
             sessionStorage.setItem("SesssionData", ExistUserName);
         }
         function DoLogout() {
-            window.location.href = '@Url.Action("Logout","Auth")';
+            window.location.href = '@Url.Action("Logout", "Auth")';
         }
 
         $(document).ready(function () {
@@ -86,14 +86,22 @@
         </footer>
     </div>
 
+    @{ 
+        string SessionMessage = "";
+        if (Session["Message"] == null)
+        {
+            Session["Message"] = "";
+        }
+        SessionMessage = Session["Message"].ToString();
+        Session["Message"] = "";
+    }
     <script>
-        var bodyMessage = '@ViewBag.Message';
+        var bodyMessage = '@SessionMessage';
         if (bodyMessage != '') {
             alert(bodyMessage);
             bodyMessage = '';
         }
-    </script>
-
+    </script> 
    @* @Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
 </body>

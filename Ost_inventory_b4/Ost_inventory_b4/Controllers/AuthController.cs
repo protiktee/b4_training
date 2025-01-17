@@ -13,7 +13,8 @@ namespace Ost_inventory_b4.Controllers
         public ActionResult Login()
         {
             Session["UserName"] = "";
-            ViewBag.Message = "";
+            if (Session["Message"] == null)
+                Session["Message"] = "";
             return View();
         }
         [HttpPost]

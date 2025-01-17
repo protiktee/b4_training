@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,7 +13,9 @@ namespace Ost_inventory_b4.Controllers
     {
         // GET: Inventory
         public ActionResult Dashboard()
-        { 
+        {
+            if (Session["Message"] == null)
+                Session["Message"] = "";
             BaseEquipment baseEquipment = new BaseEquipment();
             List<BaseEquipment> equipments = baseEquipment.LstEquipment();
 
@@ -30,16 +33,35 @@ namespace Ost_inventory_b4.Controllers
             baseEquipmentNew.ReceiveDate = DateTime.ParseExact(formCollection["txtReceiveDate"].ToString(), "dd/MM/yyyy", null);
             if (baseEquipmentNew.SaveEquipment())
             {
-                ViewBag.Message = "Save Successfully";
+                Session["Message"] = "Save Successfully";
             }
             else {
-                ViewBag.Message = "Error Occured";
+                Session["Message"] = "Error Occured";
             }
             BaseEquipment baseEquipment = new BaseEquipment();
             List<BaseEquipment> equipments = baseEquipment.LstEquipment();
 
             ViewBag.Equipment = equipments; 
             return View();
+        }
+        public ActionResult CustomerAssignment()
+        {
+            if (Session["Message"] == null)
+                Session["Message"] = "";
+            return View(); 
+        }
+        [HttpPost]
+        public ActionResult CustomerAssignment(FormCollection frmColl)
+        {
+             
+            BaseEquipment baseEquipment= new BaseEquipment();
+            int ddlCustomer = Convert.ToInt32(frmColl["ddlCustomer"].ToString());
+            int ddlEquipment = Convert.ToInt32(frmColl["ddlEquipment"].ToString());
+            int txtEquiCount = Convert.ToInt32(frmColl["txtEquiCount"].ToString());
+
+            baseEquipment.SaveCustomerEquipmentAssignment(frmColl);
+            Session["Message"] = "Save Successfully";
+            return RedirectToAction("Dashboard", "Inventory");
         }
     }
 }

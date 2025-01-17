@@ -127,6 +127,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BaseAccount.cs" />
+    <Compile Include="Models\BaseCustomer.cs" />
     <Compile Include="Models\BaseEquipment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -201,6 +202,7 @@
     <Content Include="Views\Inventory\_PartialEquipmentList.cshtml" />
     <Content Include="Views\Inventory\_PartialEquipmentAssignedList.cshtml" />
     <Content Include="Views\Inventory\_PartialModalEquipmentEntry.cshtml" />
+    <Content Include="Views\Inventory\CustomerAssignment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -250,7 +252,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50941</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50941/</IISUrl>
+          <IISUrl>http://localhost:50942/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:50942/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
