@@ -44,7 +44,7 @@
                 @{
                     foreach (BaseEquipment equipment in LstEquipment)
                     {
-                        <option value="@equipment.EquipmentId">@equipment.EquipmentName</option>
+                        <option value="@equipment.EquipmentId">@(equipment.EquipmentName+ " (Available: "+ equipment.Stock.ToString()+ ")")</option>
                     }
                 }
             </select>
