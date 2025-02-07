@@ -26,18 +26,39 @@ namespace Ost_inventory_b4.Controllers
         [HttpPost]
         public ActionResult Dashboard(FormCollection formCollection)
         {
+            int hdSelectedEquipmentID = Convert.ToInt32(formCollection["hdSelectedEquipmentID"].ToString());
+            string hdSelectedOpType = formCollection["hdSelectedOpType"].ToString();
+
             BaseEquipment baseEquipmentNew= new BaseEquipment();
+            baseEquipmentNew.EquipmentId = hdSelectedEquipmentID;
             baseEquipmentNew.EquipmentName = formCollection["txtName"].ToString();
             baseEquipmentNew.Quantity = Convert.ToInt32(formCollection["txtQuantity"].ToString());
             baseEquipmentNew.EntryDate = DateTime.ParseExact(formCollection["txtEntryDate"].ToString(), "dd/MM/yyyy", null);
             baseEquipmentNew.ReceiveDate = DateTime.ParseExact(formCollection["txtReceiveDate"].ToString(), "dd/MM/yyyy", null);
-            if (baseEquipmentNew.SaveEquipment())
+            if (hdSelectedOpType != "Delete" && hdSelectedOpType != "Update")
             {
-                Session["Message"] = "Save Successfully";
+                if (baseEquipmentNew.SaveEquipment())
+                {
+                    Session["Message"] = "Save Successfully";
+                }
+                else
+                {
+                    Session["Message"] = "Error Occured";
+                }
             }
-            else {
-                Session["Message"] = "Error Occured";
+            else
+            {
+                try
+                {
+                    baseEquipmentNew.UpdateEquipment(hdSelectedOpType);
+                    Session["Message"] = hdSelectedOpType == "Delete" ? "Deleted Successfully" : "Updated Successfully";
+                }
+                catch(Exception ex) {
+                    Session["Message"] = ex.Message;
+                }
+                
             }
+            
             BaseEquipment baseEquipment = new BaseEquipment();
             List<BaseEquipment> equipments = baseEquipment.LstEquipment();
 

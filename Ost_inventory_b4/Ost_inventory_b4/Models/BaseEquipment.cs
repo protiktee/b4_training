@@ -8,6 +8,7 @@ using System.Web;
 using System.Security.Cryptography;
 using System.Xml.Linq;
 using System.Web.Mvc;
+using System.Runtime.Remoting.Messaging;
 
 namespace Ost_inventory_b4.Models
 {
@@ -126,7 +127,52 @@ namespace Ost_inventory_b4.Models
             }
             return status;
         }
+        public bool UpdateEquipment(string OpType)
+        {
+            bool status = false;
+            string ConnString = ConfigurationManager.ConnectionStrings["ConnString"].ToString();
+            SqlConnection sqlConnection = new SqlConnection(ConnString);
 
+            try
+            {
+                sqlConnection.Open();
+                string Query = "spOST_UpdEquipment";
+                SqlCommand cmd = new SqlCommand(Query, sqlConnection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Clear();
+                if (OpType == "Update")
+                {
+                    cmd.Parameters.Add(new SqlParameter("@EquipmentId", this.EquipmentId));
+                    cmd.Parameters.Add(new SqlParameter("@Name", this.EquipmentName));
+                    cmd.Parameters.Add(new SqlParameter("@EcCount", this.Quantity));
+                    cmd.Parameters.Add(new SqlParameter("@EntryDate", this.EntryDate));
+                    cmd.Parameters.Add(new SqlParameter("@ReceiveDate", this.ReceiveDate));
+                    cmd.Parameters.Add(new SqlParameter("@OpType", OpType));
+                }
+                if (OpType == "Delete")
+                {
+                    cmd.Parameters.Add(new SqlParameter("@EquipmentId", this.EquipmentId));
+                    cmd.Parameters.Add(new SqlParameter("@OpType", OpType));
+                }
+                cmd.CommandTimeout = 0;
+
+                int returnvalue = cmd.ExecuteNonQuery();//insert delete update
+                if (returnvalue > 0)
+                {
+                    status = true;
+                }
+
+                //transaction
+                cmd.Dispose();
+                sqlConnection.Close();
+            }
+            catch (Exception ex)
+            {
+                sqlConnection.Close();
+                throw new ArgumentOutOfRangeException(ex.Message,ex);
+            }
+            return status;
+        }
         public bool SaveCustomerEquipmentAssignment(FormCollection formcoll)
         {
             bool status = false;
