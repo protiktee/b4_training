@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script> 
+
+<script>
+    $(document).ready(function(){
+        $.get("http://localhost:5153/Product/GetProducts", function(data, status) { 
+            var products = '';
+            $.each(data, function(index,value) { 
+                products = products + '<span>' + value.name + '[Cat:' + value.category.category + ']' + '</span><br />'
+                console.log(value.name);
+
+                $.each(value.baseReviews, function(indexReview, valueReview) {
+                    console.log(valueReview.review)
+                })
+            })
+            $('#dvProducts').append(products)
+        }); 
+    })
+
+</script>
+
+
+<div id="dvProducts">
+    
+</div>
