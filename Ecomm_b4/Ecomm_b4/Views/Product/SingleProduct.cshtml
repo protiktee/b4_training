@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<script> 
+    var id = @Context.Request.Query["id"].ToString()
+    $(document).ready(function(){
+            $.get("https://dummyjson.com/products/" + id, function(data, status) {
+             console.log(data)
+            $('#pdTitle').html(data.title);
+            $('#pdDescription').html(data.description);
+            $('#pdPrice').html(data.price); 
+            $('#pdImgUrl').attr('src', data.images[0]);
+        });
+    })
+    // $.post("http://localhost:5153/Product/SaveProduct", baseProducts)//{ name: "John", time: "2pm" }
+    //     .done(function(data, status) {
+    //         console.log(data)
+    //         alert(data)
+    //     })
+    //     .fail(function(data) {
+    //         alert(data.statusText)
+    //     })
+</script>
+
+<div class="card" style="max-width: 800px;">
+    <div class="row">
+        <div class="col-md-6">
+            <img id="pdImgUrl" src="" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-6">
+            <div class="card-body">
+                <h5 class="card-title" id="pdTitle"></h5>
+                <p class="card-text" id="pdDescription"></p>
+                <p class="card-text" id="pdPrice"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dvPdImages" class="row" style="width:200px">
+    <div class="col" style="width:60px;border-right: 1px solid #ccc;">
+        <img src="https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col" style="width:60px">
+        <img src="https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png" class="img-fluid rounded-start" alt="...">
+    </div>
+</div>

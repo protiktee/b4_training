@@ -2,29 +2,41 @@
     ViewData["Title"] = "Home Page";
 }
 
-<script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous"></script> 
 
 <script>
+    function ShowSingleProduct(id) {
+        window.location.href = '@Url.Action("SingleProduct", "Product")?id=' + id;
+    }
     $(document).ready(function(){
-        $.get("http://localhost:5153/Product/GetProducts", function(data, status) { 
-            var products = '';
-            $.each(data, function(index,value) { 
-                products = products + '<span>' + value.name + '[Cat:' + value.category.category + ']' + '</span><br />'
-                console.log(value.name);
-
-                $.each(value.baseReviews, function(indexReview, valueReview) {
-                    console.log(valueReview.review)
-                })
+        $.get("https://dummyjson.com/products", function(data, status) {
+            $.each(data.products, function(index,obj) {
+                var pdData = `<div class="col">
+                        <div class="card" style="width: 18rem;cursor:pointer" onclick='ShowSingleProduct(${obj.id})'>
+                                <img src="${obj.thumbnail}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                    <h5 class="card-title">${obj.title}</h5>
+                                    <p class="card-text">tk ${obj.price}</p>
+                                <a href="#" class="btn btn-primary">Add To Cart</a>
+                            </div>
+                    </div>
+                </div>`;
+                $('#dvProductsRow').append(pdData);
             })
-            $('#dvProducts').append(products)
-        }); 
+        });
     })
-
+    // $.post("http://localhost:5153/Product/SaveProduct", baseProducts)//{ name: "John", time: "2pm" }
+    //     .done(function(data, status) {
+    //         console.log(data)
+    //         alert(data)
+    //     })
+    //     .fail(function(data) {
+    //         alert(data.statusText)
+    //     })
 </script>
 
 
 <div id="dvProducts">
-    
+    <div id="dvProductsRow" class="row">
+       
+    </div> 
 </div>
