@@ -1,0 +1,25 @@
+﻿
+<style>
+    .clsCart{
+        transition: all 300ms;
+        position: fixed;
+        width: 400px;
+        right: 0px;
+        top: 57px;
+        bottom: 0px;
+        background: yellow;
+    }
+
+    @@media only screen and (max-width: 600px) {
+        .clsCart {
+            width: 200px;
+        }
+    }
+</style>
+<div id="dvCart" class="clsCart" style="display:none">
+    <input type="button" value="Close" onclick="CartController.HideCart()" />
+    <hr /> 
+    <div id="dvCartsItems" style="overflow:auto;height: 550px;">
+
+    </div>
+</div>

@@ -11,12 +11,12 @@
         $.get("https://dummyjson.com/products", function(data, status) {
             $.each(data.products, function(index,obj) {
                 var pdData = `<div class="col">
-                        <div class="card" style="width: 18rem;cursor:pointer" onclick='ShowSingleProduct(${obj.id})'>
-                                <img src="${obj.thumbnail}" class="card-img-top" alt="...">
+                        <div class="card" style="width: 18rem;cursor:pointer" >
+                                    <img src="${obj.thumbnail}" class="card-img-top" alt="..." onclick='ShowSingleProduct(${obj.id})'>
                             <div class="card-body">
-                                    <h5 class="card-title">${obj.title}</h5>
+                                        <h5 class="card-title" onclick='ShowSingleProduct(${obj.id})'>${obj.title}</h5>
                                     <p class="card-text">tk ${obj.price}</p>
-                                <a href="#" class="btn btn-primary">Add To Cart</a>
+                                        <a href="#" class="btn btn-primary" onclick='return CartController.AddToCart(${obj.id})'>Add To Cart</a>
                             </div>
                     </div>
                 </div>`;

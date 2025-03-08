@@ -11,10 +11,10 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
             crossorigin="anonymous"></script>
-
+    <script src="~/js/CartController.js"></script>
 </head>
 <body>
-    <header>
+    <header style="position:fixed;top:0px;z-index:3;width:100%;">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Ecomm_b4</a>
@@ -30,12 +30,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" onclick="CartController.ShowCart()">Cart (<span id="spnCartCount">0</span>)</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container" style="margin:60px;">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -45,7 +48,8 @@
         <div class="container">
             &copy; 2025 - Ecomm_b4 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer> 
+    @await Html.PartialAsync("~/Views/Home/_CartPartial.cshtml")
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
