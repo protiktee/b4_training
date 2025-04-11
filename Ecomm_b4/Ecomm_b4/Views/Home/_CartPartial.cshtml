@@ -22,4 +22,13 @@
     <div id="dvCartsItems" style="overflow:auto;height: 550px;">
 
     </div>
+    <div style="width:100%">
+        <center>
+            Total Price:<span id="CartTotalPrice"></span>
+        </center>
+       <div>
+           <input type="button" value="View Cart" onclick="window.location.href='@Url.Action("CartDetails","Product")'"/>
+            <input type="button" value="Checkout" onclick="window.location.href='@Url.Action("checkout","Product")'" />
+       </div>
+    </div>
 </div>
