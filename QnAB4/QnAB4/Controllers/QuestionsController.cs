@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using QnAB4.Model;
 using System.ComponentModel.DataAnnotations;
@@ -8,9 +9,11 @@ namespace QnAB4.Controllers
     [Route("[controller]")]
     public class QuestionsController : Controller
     {
+        [EnableCors("P2")]
         [HttpGet("GetQuestions")]
         public IActionResult GetQuestions()
         {
+            int i = Convert.ToInt32("hfhg"); 
             return Ok("Test question");
         }
         [Authorize]
@@ -19,7 +22,7 @@ namespace QnAB4.Controllers
         {
             return Ok("Query QuestionID"+ QuestionID.ToString());
         }
-
+        [EnableCors("P1")]
         [HttpGet("GetQuestionV2/{QuestionID}/{UserName}")]
         public IActionResult GetQuestionV2(int QuestionID,string UserName)
         {
